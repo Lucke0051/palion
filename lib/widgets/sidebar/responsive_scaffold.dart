@@ -4,8 +4,8 @@ import 'package:palion/widgets/sidebar/sidebar.dart';
 class ResponsiveScaffold extends StatefulWidget {
   final Widget title;
   final Widget body;
-  final List<Map<String, dynamic>> tabs;
-  final void Function(String)? onTabChanged;
+  final List<SidebarTab> tabs;
+  final void Function(dynamic)? onTabChanged;
 
   const ResponsiveScaffold({
     Key? key,

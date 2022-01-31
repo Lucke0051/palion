@@ -6,8 +6,8 @@ import 'package:palion/widgets/sidebar/custom_expansion_tile.dart';
 //TODO: https://developer.apple.com/design/human-interface-guidelines/ios/bars/sidebars/
 
 class Sidebar extends StatefulWidget {
-  final List<Map<String, dynamic>> tabs;
-  final void Function(String)? onTabChanged;
+  final List<SidebarTab> tabs;
+  final void Function(dynamic)? onTabChanged;
   final List<int>? activeTabIndices;
 
   // const Sidebar({
@@ -44,22 +44,22 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
         final String? tabId = newActiveTabData[1] as String?;
         if (newActiveTabIndices.isNotEmpty) {
           setActiveTabIndices(newActiveTabIndices);
-          if (widget.onTabChanged != null) widget.onTabChanged?.call(tabId!);
+          if (widget.onTabChanged != null) widget.onTabChanged?.call(tabId);
         }
       }
     });
   }
 
-  List<Object?> _getFirstTabIndex(List<Map<String, dynamic>> tabs, List<int>? indices) {
+  List<Object?> _getFirstTabIndex(List<SidebarTab> tabs, List<int>? indices) {
     List<int>? newIndices = indices;
-    String? tabId;
+    dynamic tabId;
     if (tabs.isNotEmpty) {
-      final Map<String, dynamic> firstTab = tabs[0];
-      tabId = (firstTab["id"] ?? firstTab["title"]) as String;
+      final SidebarTab firstTab = tabs.first;
+      tabId = firstTab.key;
       newIndices!.add(0);
 
-      if (firstTab["children"] != null) {
-        final tabData = _getFirstTabIndex(firstTab["children"] as List<Map<String, dynamic>>, newIndices);
+      if (firstTab.children != null && firstTab.children!.isNotEmpty) {
+        final tabData = _getFirstTabIndex(firstTab.children!, newIndices);
         newIndices = tabData[0] as List<int>?;
         tabId = tabData[1] as String?;
       }
@@ -112,8 +112,8 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
 }
 
 class SidebarItem extends StatelessWidget {
-  final Map<String, dynamic>? data;
-  final void Function(String)? onTabChanged;
+  final SidebarTab? data;
+  final void Function(dynamic)? onTabChanged;
   final List<int>? activeTabIndices;
   final void Function(List<int> newIndices) setActiveTabIndices;
   final int? index;
@@ -140,23 +140,23 @@ class SidebarItem extends StatelessWidget {
     return true;
   }
 
-  Widget _buildTiles(Map<String, dynamic> root) {
+  Widget _buildTiles(SidebarTab root) {
     final _indices = indices ?? [index!];
-    if (root["children"] == null) {
+    if (root.children == null || root.children!.isEmpty) {
       return ListTile(
         selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
         contentPadding: EdgeInsets.only(left: 16.0 + 20.0 * (_indices.length - 1)),
-        title: Text(root["title"] as String),
+        title: Text(root.title),
         onTap: () {
           setActiveTabIndices(_indices);
-          if (onTabChanged != null) onTabChanged?.call((root["id"] ?? root["title"]) as String);
+          if (onTabChanged != null) onTabChanged?.call(root.key);
         },
       );
     }
 
     final List<Widget> children = [];
-    for (int i = 0; i < (root["children"] as List).length; i++) {
-      final Map<String, dynamic> item = (root["children"] as List)[i] as Map<String, dynamic>;
+    for (int i = 0; i < root.children!.length; i++) {
+      final SidebarTab item = root.children![i];
       final itemIndices = [..._indices, i];
       children.add(
         SidebarItem(
@@ -175,7 +175,7 @@ class SidebarItem extends StatelessWidget {
         right: 12.0,
       ),
       selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
-      title: Text(root["title"] as String),
+      title: Text(root.title),
       children: children,
     );
   }
@@ -184,4 +184,16 @@ class SidebarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return _buildTiles(data!);
   }
+}
+
+class SidebarTab {
+  final dynamic key;
+  final String title;
+  final List<SidebarTab>? children;
+
+  SidebarTab({
+    required this.key,
+    required this.title,
+    this.children,
+  });
 }
