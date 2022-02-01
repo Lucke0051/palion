@@ -48,6 +48,7 @@ class PalionListItemState extends State<PalionListItem> {
               ? (widget.selectedContentColor ?? PalionColors.from(context).selectedTileContent)
               : (widget.contentColor ?? PalionColors.from(context).tileContent))
           : PalionColors.from(context).tileContentInactive,
+      size: 26,
     );
 
     final List<Widget> rowChildren = [];
@@ -93,22 +94,25 @@ class PalionListItemState extends State<PalionListItem> {
       );
     }
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        if ((widget.onTap != null) && widget.enabled) {
-          widget.onTap!.call();
-        }
-      },
-      child: Container(
-        padding: widget.contentPadding,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(9)),
-          color: calculateBackgroundColor(context),
-        ),
-        height: 38,
-        child: Row(
-          children: rowChildren,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if ((widget.onTap != null) && widget.enabled) {
+            widget.onTap!.call();
+          }
+        },
+        child: Container(
+          padding: widget.contentPadding,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(9)),
+            color: calculateBackgroundColor(context),
+          ),
+          height: 44,
+          child: Row(
+            children: rowChildren,
+          ),
         ),
       ),
     );

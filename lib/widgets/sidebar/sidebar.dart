@@ -170,13 +170,10 @@ class SidebarItem extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10,20,10,0),
-      child: CustomExpansionTile(
-        selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
-        title: root.title,
-        children: children,
-      ),
+    return CustomExpansionTile(
+      selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
+      title: root.title,
+      children: children,
     );
   }
 

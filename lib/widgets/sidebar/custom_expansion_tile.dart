@@ -16,7 +16,6 @@ class CustomExpansionTile extends StatefulWidget {
     this.maintainState = false,
     this.expandedCrossAxisAlignment,
     this.expandedAlignment,
-    this.childrenPadding,
   })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           "CrossAxisAlignment.baseline is not supported since the expanded children are aligned in a column, not a row. Try to use another constant.",
@@ -33,7 +32,6 @@ class CustomExpansionTile extends StatefulWidget {
   final bool maintainState;
   final Alignment? expandedAlignment;
   final CrossAxisAlignment? expandedCrossAxisAlignment;
-  final EdgeInsetsGeometry? childrenPadding;
 
   @override
   State<StatefulWidget> createState() => _CustomExpansionTileState();
@@ -93,21 +91,22 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          PalionListCategoryItem(
-            selectedTileColor: Colors.transparent,
-            selectedContentColor: CupertinoColors.label,
-            selected: widget.selected ?? false,
-            onTap: _handleTap,
-            leading: widget.leading,
-            label: widget.title,
-            trailing: widget.trailing ??
-                RotationTransition(
-                  turns: _iconTurns,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down,
-                    color: CupertinoColors.activeBlue,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            child: PalionListCategoryItem(
+              tileColor: Colors.transparent,
+              active: _isExpanded,
+              onTap: _handleTap,
+              label: widget.title,
+              trailing: widget.trailing ??
+                  RotationTransition(
+                    turns: _iconTurns,
+                    child: const Icon(
+                      CupertinoIcons.chevron_down,
+                      color: CupertinoColors.activeBlue,
+                    ),
                   ),
-                ),
+            ),
           ),
           ClipRect(
             child: Align(
@@ -130,12 +129,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       offstage: closed,
       child: TickerMode(
         enabled: !closed,
-        child: Padding(
-          padding: widget.childrenPadding ?? EdgeInsets.zero,
-          child: Column(
-            crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
-            children: widget.children,
-          ),
+        child: Column(
+          crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.start,
+          children: widget.children,
         ),
       ),
     );

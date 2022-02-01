@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:palion/utilities/colors.dart';
-import 'package:palion/widgets/sidebar/sidebar.dart';
+import 'package:palion/palion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +44,12 @@ class MyHomePage extends StatelessWidget {
                   key: "chaptera",
                   title: "titlea",
                   children: [
-                    SidebarTab(key: "key", title: "cool", icon: Icon(CupertinoIcons.padlock)),
+                    SidebarTab(
+                        key: "key",
+                        title: "cool",
+                        icon: Icon(
+                          CupertinoIcons.padlock,
+                        )),
                     SidebarTab(key: "key2", title: "cool123", icon: Icon(CupertinoIcons.ant_circle)),
                     SidebarTab(key: "kedgrty2", title: "cooladwaw123"),
                   ],
@@ -82,7 +86,38 @@ class MyHomePage extends StatelessWidget {
           Expanded(
             child: Container(
               color: PalionColors.from(context).canvas,
-              child: const Center(child: Text("example")),
+              child: SafeArea(
+                child: SizedBox(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 50,
+                        width: 150,
+                        child: TextButton(
+                          child: Text("Test button"),
+                          onPressed: () {
+                            showPopover(
+                              context: context,
+                              transitionDuration: const Duration(milliseconds: 150),
+                              bodyBuilder: (context) => SizedBox(
+                                  height: 50,
+                                  width: 100,
+                                  child: CupertinoButton.filled(child: Text("close"), onPressed: () => Navigator.pop(context))),
+                              onPop: () => print('Popover was popped!'),
+                              direction: PopoverDirection.bottom,
+                              width: 200,
+                              height: 400,
+                              arrowHeight: 15,
+                              arrowWidth: 30,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
