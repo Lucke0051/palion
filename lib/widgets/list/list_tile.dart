@@ -18,15 +18,17 @@ class PalionListTile extends AbstractTile {
   final Widget? trailing;
   final Icon? iosChevron;
   final EdgeInsetsGeometry? iosChevronPadding;
-  final Function(BuildContext context)? onPressed;
+  final Function()? onPressed;
   final Function(bool value)? onToggle;
   final bool? switchValue;
   final bool enabled;
   final TextStyle? titleTextStyle;
   final TextStyle? subtitleTextStyle;
   final Color? switchActiveColor;
+  final Color? tileColor;
+  final Color? pressedTileColor;
   final _PalionListTileType _tileType;
-  final TargetPlatform? platform;
+  final bool selected;
 
   const PalionListTile({
     Key? key,
@@ -50,7 +52,9 @@ class PalionListTile extends AbstractTile {
     this.enabled = true,
     this.onPressed,
     this.switchActiveColor,
-    this.platform,
+    this.tileColor,
+    this.pressedTileColor,
+    this.selected = false,
   })  : _tileType = _PalionListTileType.simple,
         onToggle = null,
         switchValue = null,
@@ -74,7 +78,9 @@ class PalionListTile extends AbstractTile {
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.switchActiveColor,
-    this.platform,
+    this.tileColor,
+    this.pressedTileColor,
+    this.selected = false,
   })  : _tileType = _PalionListTileType.switchTile,
         onPressed = null,
         iosChevron = null,
@@ -85,10 +91,10 @@ class PalionListTile extends AbstractTile {
 
   @override
   Widget build(BuildContext context) {
-    return iosTile(context);
+    return tile(context);
   }
 
-  Widget iosTile(BuildContext context) {
+  Widget tile(BuildContext context) {
     if (_tileType == _PalionListTileType.switchTile) {
       return PalionListItem(
         enabled: enabled,
@@ -107,6 +113,9 @@ class PalionListTile extends AbstractTile {
         subtitleTextStyle: subtitleTextStyle,
         valueTextStyle: subtitleTextStyle,
         trailing: trailing,
+        selected: selected,
+        tileColor: tileColor,
+        pressedTileColor: pressedTileColor,
       );
     } else {
       return PalionListItem(
@@ -126,11 +135,14 @@ class PalionListTile extends AbstractTile {
         labelTextStyle: titleTextStyle,
         subtitleTextStyle: subtitleTextStyle,
         valueTextStyle: subtitleTextStyle,
+        selected: selected,
+        tileColor: tileColor,
+        pressedTileColor: pressedTileColor,
       );
     }
   }
 
-  Function? onTapFunction(BuildContext context) => onPressed != null ? () => onPressed!.call(context) : null;
+  Function? onTapFunction(BuildContext context) => onPressed != null ? () => onPressed!.call() : null;
 }
 
 class CustomTile extends AbstractTile {

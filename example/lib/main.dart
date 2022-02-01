@@ -29,12 +29,28 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
       tabs: [
-        SidebarTab(key: "chaptera", title: "titlea"),
+        SidebarTab(
+          key: "chaptera",
+          title: "titlea",
+          children: [
+            SidebarTab(key: "key", title: "cool"),
+            SidebarTab(key: "key2", title: "cool123"),
+          ],
+        ),
+        SidebarTab(
+          key: "chgfhgdfaptera",
+          title: "titfggfhlea",
+          children: [
+            SidebarTab(key: "keggfy", title: "cogfghol"),
+            SidebarTab(key: "kegffghy2", title: "cogfgfol123"),
+          ],
+        ),
       ],
       title: const Text("hello"),
       body: const Center(
         child: Text("ok"),
       ),
+      onTabChanged: print,
     );
   }
 }

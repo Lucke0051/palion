@@ -38,6 +38,9 @@ class PalionListItem extends StatefulWidget {
     this.subtitleTextStyle,
     this.valueTextStyle,
     this.switchActiveColor,
+    this.tileColor,
+    this.pressedTileColor,
+    this.selected = false,
     Key? key,
   }) : super(key: key);
 
@@ -63,6 +66,9 @@ class PalionListItem extends StatefulWidget {
   final TextStyle? subtitleTextStyle;
   final TextStyle? valueTextStyle;
   final Color? switchActiveColor;
+  final Color? tileColor;
+  final Color? pressedTileColor;
+  final bool selected;
 
   @override
   State<StatefulWidget> createState() => PalionListItemState();
@@ -291,7 +297,7 @@ class PalionListItemState extends State<PalionListItem> {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: isLargeScreen ? const BorderRadius.all(Radius.circular(20)) : null,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           color: calculateBackgroundColor(context),
         ),
         height: widget.subtitle == null && widget.subtitleWidget == null ? 44.0 : 57.0,
@@ -302,7 +308,8 @@ class PalionListItemState extends State<PalionListItem> {
     );
   }
 
-  Color calculateBackgroundColor(BuildContext context) => pressed ? PalionColors.from(context).pressedTile : PalionColors.from(context).tile;
+  Color calculateBackgroundColor(BuildContext context) =>
+      pressed ? (widget.pressedTileColor ?? PalionColors.from(context).pressedTile) : (widget.tileColor ?? PalionColors.from(context).tile);
 
   Color? _iconColor(ThemeData theme, ListTileThemeData tileTheme) {
     if (tileTheme.selectedColor != null) {

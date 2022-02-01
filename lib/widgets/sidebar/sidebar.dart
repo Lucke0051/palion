@@ -175,7 +175,7 @@ class SidebarItem extends StatelessWidget {
         right: 12.0,
       ),
       selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
-      title: Text(root.title),
+      title: root.title,
       children: children,
     );
   }

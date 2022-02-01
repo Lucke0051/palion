@@ -20,7 +20,7 @@ class ResponsiveScaffold extends StatefulWidget {
 }
 
 class _ResponsiveScaffoldState extends State<ResponsiveScaffold> with SingleTickerProviderStateMixin {
-  static const _mobileThreshold = 700.0;
+  static const _mobileThreshold = 700;
   bool isMobile = false;
   bool sidebarOpen = false;
   bool canBeDragged = false;
@@ -96,7 +96,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> with SingleTick
   }
 
   Future<void> onDragEnd(DragEndDetails details) async {
-    const double _kMinFlingVelocity = 365.0;
+    const double _kMinFlingVelocity = 365;
 
     if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
       final double visualVelocity = details.velocity.pixelsPerSecond.dx / 300;

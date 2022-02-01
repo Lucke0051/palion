@@ -1,13 +1,14 @@
 // ignore_for_file: sort_child_properties_last
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:palion/widgets/list/list_tile.dart';
 
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({
     Key? key,
     this.leading,
     required this.title,
-    this.subtitle,
     this.onExpansionChanged,
     this.children = const <Widget>[],
     this.trailing,
@@ -26,8 +27,7 @@ class CustomExpansionTile extends StatefulWidget {
         super(key: key);
 
   final Widget? leading;
-  final Widget title;
-  final Widget? subtitle;
+  final String title;
   final ValueChanged<bool>? onExpansionChanged;
   final List<Widget> children;
   final Widget? trailing;
@@ -97,17 +97,20 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ListTile(
+          PalionListTile(
+            tileColor: Colors.transparent,
+            pressedTileColor: Colors.transparent,
             selected: widget.selected ?? false,
-            onTap: _handleTap,
-            contentPadding: widget.tilePadding,
+            onPressed: _handleTap,
             leading: widget.leading,
             title: widget.title,
-            subtitle: widget.subtitle,
             trailing: widget.trailing ??
                 RotationTransition(
                   turns: _iconTurns,
-                  child: const Icon(Icons.expand_more),
+                  child: const Icon(
+                    CupertinoIcons.chevron_down,
+                    color: CupertinoColors.activeBlue,
+                  ),
                 ),
           ),
           ClipRect(

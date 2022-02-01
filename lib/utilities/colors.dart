@@ -33,7 +33,7 @@ class PalionColors {
         border: const Color.fromRGBO(49, 44, 51, 1),
         background: const Color(0xFFEFEFF4),
         groupSubtitle: const Color(0xFF777777),
-        tile: const Color.fromRGBO(28, 28, 30, 1),
+        tile: const Color.fromRGBO(230, 229, 235, 1),
         pressedTile: const Color.fromRGBO(230, 229, 235, 1),
       );
 
