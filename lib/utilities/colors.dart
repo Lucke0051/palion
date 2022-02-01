@@ -1,22 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PalionColors {
-  final Color grayIcon;
-  final Color itemPressed;
-  final Color border;
-  final Color background;
-  final Color groupSubtitle;
   final Color tile;
-  final Color pressedTile;
+  final Color selectedTile;
+  final Color tileContent;
+  final Color selectedTileContent;
+  final Color tileContentInactive;
+  final Color sidebarBackground;
+  final Color sidebarBorderColor;
+  final Color canvas;
+  final Color itemCategoryItemBorder;
 
   PalionColors._({
-    required this.grayIcon,
-    required this.itemPressed,
-    required this.border,
-    required this.background,
-    required this.groupSubtitle,
     required this.tile,
-    required this.pressedTile,
+    required this.selectedTile,
+    required this.tileContent,
+    required this.selectedTileContent,
+    required this.tileContentInactive,
+    required this.sidebarBackground,
+    required this.sidebarBorderColor,
+    required this.canvas,
+    required this.itemCategoryItemBorder,
   });
 
   factory PalionColors.from(final BuildContext context) {
@@ -28,13 +33,15 @@ class PalionColors {
   }
 
   factory PalionColors.light(final BuildContext context) => PalionColors._(
-        grayIcon: const Color(0xFFC7C7CC),
-        itemPressed: const Color(0xFFD9D9D9),
-        border: const Color.fromRGBO(49, 44, 51, 1),
-        background: const Color(0xFFEFEFF4),
-        groupSubtitle: const Color(0xFF777777),
-        tile: const Color.fromRGBO(230, 229, 235, 1),
-        pressedTile: const Color.fromRGBO(230, 229, 235, 1),
+        tile: Colors.transparent,
+        selectedTile: CupertinoColors.activeBlue,
+        tileContent: CupertinoColors.label,
+        selectedTileContent: CupertinoColors.white,
+        tileContentInactive: CupertinoColors.inactiveGray,
+        sidebarBackground: CupertinoColors.secondarySystemBackground,
+        sidebarBorderColor: CupertinoColors.systemGrey5,
+        canvas: CupertinoColors.systemBackground,
+        itemCategoryItemBorder: CupertinoColors.systemGrey4,
       );
 
   factory PalionColors.dark(final BuildContext context) => throw UnimplementedError();

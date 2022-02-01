@@ -1,24 +1,22 @@
 import 'dart:math' show min;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:palion/palion.dart';
+import 'package:palion/utilities/colors.dart';
 import 'package:palion/widgets/sidebar/custom_expansion_tile.dart';
 
 //TODO: https://developer.apple.com/design/human-interface-guidelines/ios/bars/sidebars/
 
 class Sidebar extends StatefulWidget {
+  final Widget? header;
   final List<SidebarTab> tabs;
   final void Function(dynamic)? onTabChanged;
   final List<int>? activeTabIndices;
 
-  // const Sidebar({
-  //   Key key,
-  //   @required this.tabs,
-  //   this.onTabChanged,
-  //   this.activeTabIndices,
-  // }) : super(key: key);
-
-  const Sidebar.fromJson({
+  const Sidebar({
     Key? key,
+    this.header,
     required this.tabs,
     this.onTabChanged,
     this.activeTabIndices,
@@ -83,26 +81,26 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).canvasColor,
+      color: PalionColors.from(context).sidebarBackground,
       width: _sidebarWidth,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 150,
-            child: Container(color: Theme.of(context).primaryColor),
+      child: CustomScrollView(
+        slivers: [
+          if (widget.header != null) widget.header!,
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
           ),
-          Expanded(
-            child: Material(
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) => SidebarItem(
-                  widget.tabs[index],
-                  widget.onTabChanged,
-                  activeTabIndices,
-                  setActiveTabIndices,
-                  index: index,
-                ),
-                itemCount: widget.tabs.length,
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) => SidebarItem(
+                widget.tabs[index],
+                widget.onTabChanged,
+                activeTabIndices,
+                setActiveTabIndices,
+                index: index,
               ),
+              childCount: widget.tabs.length,
             ),
           ),
         ],
@@ -143,14 +141,17 @@ class SidebarItem extends StatelessWidget {
   Widget _buildTiles(SidebarTab root) {
     final _indices = indices ?? [index!];
     if (root.children == null || root.children!.isEmpty) {
-      return ListTile(
-        selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
-        contentPadding: EdgeInsets.only(left: 16.0 + 20.0 * (_indices.length - 1)),
-        title: Text(root.title),
-        onTap: () {
-          setActiveTabIndices(_indices);
-          if (onTabChanged != null) onTabChanged?.call(root.key);
-        },
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: PalionListItem(
+          selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
+          label: root.title,
+          leading: root.icon,
+          onTap: () {
+            setActiveTabIndices(_indices);
+            if (onTabChanged != null) onTabChanged?.call(root.key);
+          },
+        ),
       );
     }
 
@@ -169,14 +170,13 @@ class SidebarItem extends StatelessWidget {
       );
     }
 
-    return CustomExpansionTile(
-      tilePadding: EdgeInsets.only(
-        left: 16.0 + 20.0 * (_indices.length - 1),
-        right: 12.0,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10,20,10,0),
+      child: CustomExpansionTile(
+        selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
+        title: root.title,
+        children: children,
       ),
-      selected: activeTabIndices != null && _indicesMatch(_indices, activeTabIndices!),
-      title: root.title,
-      children: children,
     );
   }
 
@@ -189,11 +189,13 @@ class SidebarItem extends StatelessWidget {
 class SidebarTab {
   final dynamic key;
   final String title;
+  final Widget? icon;
   final List<SidebarTab>? children;
 
   SidebarTab({
     required this.key,
     required this.title,
+    this.icon,
     this.children,
   });
 }

@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:palion/widgets/sidebar/responsive_scaffold.dart';
+import 'package:palion/utilities/colors.dart';
 import 'package:palion/widgets/sidebar/sidebar.dart';
 
 void main() {
@@ -27,30 +28,65 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaffold(
-      tabs: [
-        SidebarTab(
-          key: "chaptera",
-          title: "titlea",
-          children: [
-            SidebarTab(key: "key", title: "cool"),
-            SidebarTab(key: "key2", title: "cool123"),
-          ],
-        ),
-        SidebarTab(
-          key: "chgfhgdfaptera",
-          title: "titfggfhlea",
-          children: [
-            SidebarTab(key: "keggfy", title: "cogfghol"),
-            SidebarTab(key: "kegffghy2", title: "cogfgfol123"),
-          ],
-        ),
-      ],
-      title: const Text("hello"),
-      body: const Center(
-        child: Text("ok"),
+    final Size screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Row(
+        children: [
+          SizedBox(
+            width: 300,
+            child: Sidebar(
+              tabs: [
+                SidebarTab(
+                  key: "chapwadatera",
+                  title: "titdawlea",
+                  icon: Icon(CupertinoIcons.padlock),
+                ),
+                SidebarTab(
+                  key: "chaptera",
+                  title: "titlea",
+                  children: [
+                    SidebarTab(key: "key", title: "cool", icon: Icon(CupertinoIcons.padlock)),
+                    SidebarTab(key: "key2", title: "cool123", icon: Icon(CupertinoIcons.ant_circle)),
+                    SidebarTab(key: "kedgrty2", title: "cooladwaw123"),
+                  ],
+                ),
+                SidebarTab(
+                  key: "chgfhgdfaptera",
+                  title: "titfggfhlea",
+                  children: [
+                    SidebarTab(key: "keggfy", title: "cogfghol"),
+                    SidebarTab(key: "kegffghy2", title: "cogfgfol123"),
+                  ],
+                ),
+              ],
+              header: const CupertinoSliverNavigationBar(
+                leading: Icon(
+                  CupertinoIcons.sidebar_left,
+                  size: 20,
+                  color: CupertinoColors.activeBlue,
+                ),
+                trailing: Text(
+                  "Edit",
+                  style: TextStyle(color: CupertinoColors.activeBlue, fontSize: 16),
+                ),
+                largeTitle: Text("Example"),
+              ),
+              onTabChanged: print,
+            ),
+          ),
+          Container(
+            width: 1,
+            height: screenSize.height,
+            color: PalionColors.from(context).sidebarBorderColor,
+          ),
+          Expanded(
+            child: Container(
+              color: PalionColors.from(context).canvas,
+              child: const Center(child: Text("example")),
+            ),
+          ),
+        ],
       ),
-      onTabChanged: print,
     );
   }
 }

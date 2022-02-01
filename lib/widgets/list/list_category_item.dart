@@ -3,8 +3,8 @@ import 'package:palion/utilities/colors.dart';
 
 typedef PressOperationCallback = void Function();
 
-class PalionListItem extends StatefulWidget {
-  const PalionListItem({
+class PalionListCategoryItem extends StatefulWidget {
+  const PalionListCategoryItem({
     this.leading,
     required this.label,
     this.labelPaddingLeft,
@@ -36,10 +36,10 @@ class PalionListItem extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
 
   @override
-  State<StatefulWidget> createState() => PalionListItemState();
+  State<StatefulWidget> createState() => PalionListCategoryItemState();
 }
 
-class PalionListItemState extends State<PalionListItem> {
+class PalionListCategoryItemState extends State<PalionListCategoryItem> {
   @override
   Widget build(BuildContext context) {
     final IconThemeData iconThemeData = IconThemeData(
@@ -71,8 +71,8 @@ class PalionListItemState extends State<PalionListItem> {
           child: Text(
             widget.label,
             style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
               color: widget.enabled
                   ? (widget.selected
                       ? (widget.selectedContentColor ?? PalionColors.from(context).selectedTileContent)
@@ -103,12 +103,26 @@ class PalionListItemState extends State<PalionListItem> {
       child: Container(
         padding: widget.contentPadding,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           color: calculateBackgroundColor(context),
         ),
-        height: 38,
-        child: Row(
-          children: rowChildren,
+        height: 40,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: rowChildren,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Container(
+                height: 1,
+                color: PalionColors.from(context).itemCategoryItemBorder,
+              ),
+            ),
+          ],
         ),
       ),
     );

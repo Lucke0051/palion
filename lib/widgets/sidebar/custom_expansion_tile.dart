@@ -1,8 +1,7 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:palion/widgets/list/list_tile.dart';
+import 'package:palion/widgets/list/list_category_item.dart';
+import 'package:palion/widgets/list/list_item.dart';
 
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({
@@ -15,14 +14,12 @@ class CustomExpansionTile extends StatefulWidget {
     this.selected,
     this.initiallyExpanded = false,
     this.maintainState = false,
-    this.tilePadding,
     this.expandedCrossAxisAlignment,
     this.expandedAlignment,
     this.childrenPadding,
   })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
-          'CrossAxisAlignment.baseline is not supported since the expanded children '
-          'are aligned in a column, not a row. Try to use another constant.',
+          "CrossAxisAlignment.baseline is not supported since the expanded children are aligned in a column, not a row. Try to use another constant.",
         ),
         super(key: key);
 
@@ -34,7 +31,6 @@ class CustomExpansionTile extends StatefulWidget {
   final bool? selected;
   final bool initiallyExpanded;
   final bool maintainState;
-  final EdgeInsetsGeometry? tilePadding;
   final Alignment? expandedAlignment;
   final CrossAxisAlignment? expandedCrossAxisAlignment;
   final EdgeInsetsGeometry? childrenPadding;
@@ -62,7 +58,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
 
     _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
-    if (_isExpanded) _controller.value = 1.0;
+    if (_isExpanded) _controller.value = 1;
   }
 
   @override
@@ -97,13 +93,13 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          PalionListTile(
-            tileColor: Colors.transparent,
-            pressedTileColor: Colors.transparent,
+          PalionListCategoryItem(
+            selectedTileColor: Colors.transparent,
+            selectedContentColor: CupertinoColors.label,
             selected: widget.selected ?? false,
-            onPressed: _handleTap,
+            onTap: _handleTap,
             leading: widget.leading,
-            title: widget.title,
+            label: widget.title,
             trailing: widget.trailing ??
                 RotationTransition(
                   turns: _iconTurns,
@@ -131,7 +127,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
     final bool shouldRemoveChildren = closed && !widget.maintainState;
 
     final Widget result = Offstage(
+      offstage: closed,
       child: TickerMode(
+        enabled: !closed,
         child: Padding(
           padding: widget.childrenPadding ?? EdgeInsets.zero,
           child: Column(
@@ -139,9 +137,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
             children: widget.children,
           ),
         ),
-        enabled: !closed,
       ),
-      offstage: closed,
     );
 
     return AnimatedBuilder(
