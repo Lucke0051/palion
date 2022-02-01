@@ -35,7 +35,7 @@ class PalionListCategoryItemState extends State<PalionListCategoryItem> {
   @override
   Widget build(BuildContext context) {
     final IconThemeData iconThemeData = IconThemeData(
-      color: widget.enabled ? widget.contentColor ?? PalionColors.from(context).tileContent : PalionColors.from(context).tileContentInactive,
+      color: widget.enabled ? widget.contentColor ?? PalionTheme.of(context).tileContent : PalionTheme.of(context).tileContentInactive,
     );
 
     final List<Widget> rowChildren = [];
@@ -51,7 +51,7 @@ class PalionListCategoryItemState extends State<PalionListCategoryItem> {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 20,
-              color: widget.enabled ? widget.contentColor ?? PalionColors.from(context).tileContent : PalionColors.from(context).tileContentInactive,
+              color: widget.enabled ? widget.contentColor ?? PalionTheme.of(context).tileContent : PalionTheme.of(context).tileContentInactive,
             ),
           ),
         ),
@@ -99,7 +99,7 @@ class PalionListCategoryItemState extends State<PalionListCategoryItem> {
                       padding: const EdgeInsets.only(top: 4),
                       child: Container(
                         height: 1,
-                        color: PalionColors.from(context).itemCategoryItemBorder,
+                        color: PalionTheme.of(context).itemCategoryItemBorder,
                       ),
                     ),
                   ],
@@ -109,5 +109,5 @@ class PalionListCategoryItemState extends State<PalionListCategoryItem> {
     );
   }
 
-  Color calculateBackgroundColor(BuildContext context) => widget.tileColor ?? PalionColors.from(context).tile;
+  Color calculateBackgroundColor(BuildContext context) => widget.tileColor ?? PalionTheme.of(context).tile;
 }

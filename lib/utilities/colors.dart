@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PalionColors {
+class PalionTheme extends InheritedWidget {
   final Color tile;
   final Color selectedTile;
   final Color tileContent;
@@ -11,28 +11,59 @@ class PalionColors {
   final Color sidebarBorderColor;
   final Color canvas;
   final Color itemCategoryItemBorder;
+  final Color primaryColor;
+  final Color active;
+  final Color tapOverlay;
 
-  PalionColors._({
-    required this.tile,
-    required this.selectedTile,
-    required this.tileContent,
-    required this.selectedTileContent,
-    required this.tileContentInactive,
-    required this.sidebarBackground,
-    required this.sidebarBorderColor,
-    required this.canvas,
-    required this.itemCategoryItemBorder,
-  });
+  const PalionTheme({
+    required final this.tile,
+    required final this.selectedTile,
+    required final this.tileContent,
+    required final this.selectedTileContent,
+    required final this.tileContentInactive,
+    required final this.sidebarBackground,
+    required final this.sidebarBorderColor,
+    required final this.canvas,
+    required final this.itemCategoryItemBorder,
+    required final this.primaryColor,
+    required final this.active,
+    required final this.tapOverlay,
+    final Key? key,
+    required final Widget child,
+  }) : super(child: child, key: key);
 
-  factory PalionColors.from(final BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.light) {
-      return PalionColors.light(context);
-    } else {
-      return PalionColors.dark(context);
-    }
-  }
+  PalionTheme copyWith({
+    final Color? tile,
+    final Color? selectedTile,
+    final Color? tileContent,
+    final Color? selectedTileContent,
+    final Color? tileContentInactive,
+    final Color? sidebarBackground,
+    final Color? sidebarBorderColor,
+    final Color? canvas,
+    final Color? itemCategoryItemBorder,
+    final Color? primaryColor,
+    final Color? active,
+    final Color? tapOverlay,
+    final Key? key,
+  }) =>
+      PalionTheme(
+        tile: tile ?? this.tile,
+        selectedTile: selectedTile ?? this.selectedTile,
+        tileContent: tileContent ?? this.tileContent,
+        selectedTileContent: selectedTileContent ?? this.selectedTileContent,
+        tileContentInactive: tileContentInactive ?? this.tileContentInactive,
+        sidebarBackground: sidebarBackground ?? this.sidebarBackground,
+        sidebarBorderColor: sidebarBorderColor ?? this.sidebarBorderColor,
+        canvas: canvas ?? this.canvas,
+        itemCategoryItemBorder: itemCategoryItemBorder ?? this.itemCategoryItemBorder,
+        primaryColor: primaryColor ?? this.primaryColor,
+        active: active ?? this.active,
+        tapOverlay: tapOverlay ?? this.tapOverlay,
+        child: child,
+      );
 
-  factory PalionColors.light(final BuildContext context) => PalionColors._(
+  factory PalionTheme.light({required final Widget child}) => PalionTheme(
         tile: Colors.transparent,
         selectedTile: CupertinoColors.activeBlue,
         tileContent: CupertinoColors.label,
@@ -42,21 +73,18 @@ class PalionColors {
         sidebarBorderColor: CupertinoColors.systemGrey5,
         canvas: CupertinoColors.systemBackground,
         itemCategoryItemBorder: CupertinoColors.systemGrey4,
+        primaryColor: Colors.blue,
+        active: CupertinoColors.activeBlue,
+        tapOverlay: Colors.white24,
+        child: child,
       );
 
-  factory PalionColors.dark(final BuildContext context) => throw UnimplementedError();
+  @override
+  bool updateShouldNotify(PalionTheme oldWidget) => true;
+
+  static PalionTheme of(BuildContext context) {
+    final PalionTheme? inherited = context.dependOnInheritedWidgetOfExactType<PalionTheme>();
+    if (inherited != null) return inherited;
+    throw Exception("No PalionTheme was found in tree.");
+  }
 }
-
-/*
-import 'dart:ui';
-
-const Color mediumGrayColor = Color(0xFFC7C7CC);
-const Color itemPressedColor = Color(0xFFD9D9D9);
-const Color borderColor = Color(0xFFBCBBC1);
-const Color borderLightColor = Color.fromRGBO(49, 44, 51, 1);
-const Color backgroundGray = Color(0xFFEFEFF4);
-const Color groupSubtitle = Color(0xFF777777);
-const Color iosTileDarkColor = Color.fromRGBO(28, 28, 30, 1);
-const Color iosPressedTileColorDark = Color.fromRGBO(44, 44, 46, 1);
-const Color iosPressedTileColorLight = Color.fromRGBO(230, 229, 235, 1);
-*/

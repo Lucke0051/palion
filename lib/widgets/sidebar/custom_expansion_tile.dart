@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:palion/utilities/colors.dart';
 import 'package:palion/widgets/list/list_category_item.dart';
-import 'package:palion/widgets/list/list_item.dart';
 
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({
@@ -101,9 +101,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
               trailing: widget.trailing ??
                   RotationTransition(
                     turns: _iconTurns,
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.chevron_down,
-                      color: CupertinoColors.activeBlue,
+                      color: PalionTheme.of(context).active,
                     ),
                   ),
             ),

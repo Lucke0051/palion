@@ -40,14 +40,16 @@ class PalionListItem extends StatefulWidget {
 }
 
 class PalionListItemState extends State<PalionListItem> {
+  bool isTapped = false;
+
   @override
   Widget build(BuildContext context) {
     final IconThemeData iconThemeData = IconThemeData(
       color: widget.enabled
           ? (widget.selected
-              ? (widget.selectedContentColor ?? PalionColors.from(context).selectedTileContent)
-              : (widget.contentColor ?? PalionColors.from(context).tileContent))
-          : PalionColors.from(context).tileContentInactive,
+              ? (widget.selectedContentColor ?? PalionTheme.of(context).selectedTileContent)
+              : (widget.contentColor ?? PalionTheme.of(context).tileContent))
+          : PalionTheme.of(context).tileContentInactive,
       size: 26,
     );
 
@@ -76,9 +78,9 @@ class PalionListItemState extends State<PalionListItem> {
               fontSize: 18,
               color: widget.enabled
                   ? (widget.selected
-                      ? (widget.selectedContentColor ?? PalionColors.from(context).selectedTileContent)
-                      : (widget.contentColor ?? PalionColors.from(context).tileContent))
-                  : PalionColors.from(context).tileContentInactive,
+                      ? (widget.selectedContentColor ?? PalionTheme.of(context).selectedTileContent)
+                      : (widget.contentColor ?? PalionTheme.of(context).tileContent))
+                  : PalionTheme.of(context).tileContentInactive,
             ),
           ),
         ),
@@ -103,6 +105,9 @@ class PalionListItemState extends State<PalionListItem> {
             widget.onTap!.call();
           }
         },
+        onTapDown: (_) => setState(() => isTapped = true),
+        onTapUp: (_) => setState(() => isTapped = false),
+        onTapCancel: () => setState(() => isTapped = false),
         child: Container(
           padding: widget.contentPadding,
           decoration: BoxDecoration(
@@ -118,6 +123,9 @@ class PalionListItemState extends State<PalionListItem> {
     );
   }
 
-  Color calculateBackgroundColor(BuildContext context) =>
-      widget.selected ? (widget.selectedTileColor ?? PalionColors.from(context).selectedTile) : (widget.tileColor ?? PalionColors.from(context).tile);
+  Color calculateBackgroundColor(BuildContext context) => widget.selected
+      ? (isTapped
+          ? Color.alphaBlend(PalionTheme.of(context).tapOverlay, widget.selectedTileColor ?? PalionTheme.of(context).selectedTile)
+          : (widget.selectedTileColor ?? PalionTheme.of(context).selectedTile))
+      : (widget.tileColor ?? PalionTheme.of(context).tile);
 }

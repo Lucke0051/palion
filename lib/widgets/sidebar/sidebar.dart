@@ -3,18 +3,17 @@ import 'dart:math' show min;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:palion/palion.dart';
-import 'package:palion/utilities/colors.dart';
 import 'package:palion/widgets/sidebar/custom_expansion_tile.dart';
 
 //TODO: https://developer.apple.com/design/human-interface-guidelines/ios/bars/sidebars/
 
-class Sidebar extends StatefulWidget {
+class PalionSidebar extends StatefulWidget {
   final Widget? header;
-  final List<SidebarTab> tabs;
+  final List<PalionSidebarTab> tabs;
   final void Function(dynamic)? onTabChanged;
   final List<int>? activeTabIndices;
 
-  const Sidebar({
+  const PalionSidebar({
     Key? key,
     this.header,
     required this.tabs,
@@ -23,11 +22,11 @@ class Sidebar extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SidebarState();
+  State<StatefulWidget> createState() => _PalionSidebarState();
 }
 
-class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
-  static const double _maxSidebarWidth = 300;
+class _PalionSidebarState extends State<PalionSidebar> with SingleTickerProviderStateMixin {
+  static const double _maxSidebarWidth = 350;
   double _sidebarWidth = _maxSidebarWidth;
   List<int>? activeTabIndices;
 
@@ -48,11 +47,11 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
     });
   }
 
-  List<Object?> _getFirstTabIndex(List<SidebarTab> tabs, List<int>? indices) {
+  List<Object?> _getFirstTabIndex(List<PalionSidebarTab> tabs, List<int>? indices) {
     List<int>? newIndices = indices;
     dynamic tabId;
     if (tabs.isNotEmpty) {
-      final SidebarTab firstTab = tabs.first;
+      final PalionSidebarTab firstTab = tabs.first;
       tabId = firstTab.key;
       newIndices!.add(0);
 
@@ -81,7 +80,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: PalionColors.from(context).sidebarBackground,
+      color: PalionTheme.of(context).sidebarBackground,
       width: _sidebarWidth,
       child: CustomScrollView(
         slivers: [
@@ -93,7 +92,7 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) => SidebarItem(
+              (BuildContext context, int index) => PalionSidebarItem(
                 widget.tabs[index],
                 widget.onTabChanged,
                 activeTabIndices,
@@ -109,15 +108,15 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin {
   }
 }
 
-class SidebarItem extends StatelessWidget {
-  final SidebarTab? data;
+class PalionSidebarItem extends StatelessWidget {
+  final PalionSidebarTab? data;
   final void Function(dynamic)? onTabChanged;
   final List<int>? activeTabIndices;
   final void Function(List<int> newIndices) setActiveTabIndices;
   final int? index;
   final List<int>? indices;
 
-  const SidebarItem(
+  const PalionSidebarItem(
     this.data,
     this.onTabChanged,
     this.activeTabIndices,
@@ -138,7 +137,7 @@ class SidebarItem extends StatelessWidget {
     return true;
   }
 
-  Widget _buildTiles(SidebarTab root) {
+  Widget _buildTiles(PalionSidebarTab root) {
     final _indices = indices ?? [index!];
     if (root.children == null || root.children!.isEmpty) {
       return Padding(
@@ -157,10 +156,10 @@ class SidebarItem extends StatelessWidget {
 
     final List<Widget> children = [];
     for (int i = 0; i < root.children!.length; i++) {
-      final SidebarTab item = root.children![i];
+      final PalionSidebarTab item = root.children![i];
       final itemIndices = [..._indices, i];
       children.add(
-        SidebarItem(
+        PalionSidebarItem(
           item,
           onTabChanged,
           activeTabIndices,
@@ -183,13 +182,13 @@ class SidebarItem extends StatelessWidget {
   }
 }
 
-class SidebarTab {
+class PalionSidebarTab {
   final dynamic key;
   final String title;
   final Widget? icon;
-  final List<SidebarTab>? children;
+  final List<PalionSidebarTab>? children;
 
-  SidebarTab({
+  PalionSidebarTab({
     required this.key,
     required this.title,
     this.icon,

@@ -13,11 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: "Example",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(),
+      home: PalionTheme.light(child: const MyHomePage()).copyWith(primaryColor: Colors.green, active: Colors.green, selectedTile: Colors.green),
     );
   }
 }
@@ -32,48 +33,45 @@ class MyHomePage extends StatelessWidget {
       body: Row(
         children: [
           SizedBox(
-            width: 300,
-            child: Sidebar(
+            width: 350,
+            child: PalionSidebar(
               tabs: [
-                SidebarTab(
-                  key: "chapwadatera",
-                  title: "titdawlea",
-                  icon: Icon(CupertinoIcons.padlock),
+                PalionSidebarTab(
+                  title: "Item",
+                  key: null,
+                  icon: const Icon(CupertinoIcons.padlock),
                 ),
-                SidebarTab(
-                  key: "chaptera",
-                  title: "titlea",
+                PalionSidebarTab(
+                  key: null,
+                  title: "Category 1",
                   children: [
-                    SidebarTab(
-                        key: "key",
-                        title: "cool",
-                        icon: Icon(
-                          CupertinoIcons.padlock,
-                        )),
-                    SidebarTab(key: "key2", title: "cool123", icon: Icon(CupertinoIcons.ant_circle)),
-                    SidebarTab(key: "kedgrty2", title: "cooladwaw123"),
+                    PalionSidebarTab(key: null, title: "Item 1", icon: const Icon(CupertinoIcons.device_phone_landscape)),
+                    PalionSidebarTab(key: null, title: "Item 2", icon: const Icon(CupertinoIcons.ant_circle)),
+                    PalionSidebarTab(key: null, title: "Item 3"),
+                    PalionSidebarTab(key: null, title: "Item 4", icon: const Icon(CupertinoIcons.cart_fill)),
+                    PalionSidebarTab(key: null, title: "Item 5"),
                   ],
                 ),
-                SidebarTab(
-                  key: "chgfhgdfaptera",
-                  title: "titfggfhlea",
+                PalionSidebarTab(
+                  key: null,
+                  title: "Category 2",
                   children: [
-                    SidebarTab(key: "keggfy", title: "cogfghol"),
-                    SidebarTab(key: "kegffghy2", title: "cogfgfol123"),
+                    PalionSidebarTab(key: null, title: "Item"),
+                    PalionSidebarTab(key: null, title: "Item"),
                   ],
                 ),
               ],
-              header: const CupertinoSliverNavigationBar(
+              header: CupertinoSliverNavigationBar(
                 leading: Icon(
                   CupertinoIcons.sidebar_left,
                   size: 20,
-                  color: CupertinoColors.activeBlue,
+                  color: PalionTheme.of(context).active,
                 ),
                 trailing: Text(
                   "Edit",
-                  style: TextStyle(color: CupertinoColors.activeBlue, fontSize: 16),
+                  style: TextStyle(color: PalionTheme.of(context).active, fontSize: 16),
                 ),
-                largeTitle: Text("Example"),
+                largeTitle: const Text("Example"),
               ),
               onTabChanged: print,
             ),
@@ -81,40 +79,40 @@ class MyHomePage extends StatelessWidget {
           Container(
             width: 1,
             height: screenSize.height,
-            color: PalionColors.from(context).sidebarBorderColor,
+            color: PalionTheme.of(context).sidebarBorderColor,
           ),
           Expanded(
             child: Container(
-              color: PalionColors.from(context).canvas,
+              color: PalionTheme.of(context).canvas,
               child: SafeArea(
-                child: SizedBox(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: SizedBox(
-                        height: 50,
-                        width: 150,
-                        child: TextButton(
-                          child: Text("Test button"),
-                          onPressed: () {
-                            showPopover(
-                              context: context,
-                              transitionDuration: const Duration(milliseconds: 150),
-                              bodyBuilder: (context) => SizedBox(
-                                  height: 50,
-                                  width: 100,
-                                  child: CupertinoButton.filled(child: Text("close"), onPressed: () => Navigator.pop(context))),
-                              onPop: () => print('Popover was popped!'),
-                              direction: PopoverDirection.bottom,
-                              width: 200,
-                              height: 400,
-                              arrowHeight: 15,
-                              arrowWidth: 30,
-                            );
-                          },
-                        ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 10),
+                          PalionButton.small(
+                            leading: const Icon(CupertinoIcons.play_arrow_solid),
+                            label: "Play",
+                            onPressed: () {},
+                          ),
+                          const SizedBox(height: 10),
+                          PalionButton.medium(
+                            leading: const Icon(CupertinoIcons.play_arrow_solid),
+                            label: "Play",
+                            onPressed: () {},
+                          ),
+                          const SizedBox(height: 10),
+                          PalionButton.large(
+                            leading: const Icon(CupertinoIcons.play_arrow_solid),
+                            label: "Play",
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
