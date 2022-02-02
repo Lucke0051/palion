@@ -14,6 +14,8 @@ class PalionTheme extends InheritedWidget {
   final Color primaryColor;
   final Color active;
   final Color tapOverlay;
+  final Color cardBackground;
+  final Color cardContent;
 
   const PalionTheme({
     required final this.tile,
@@ -28,6 +30,8 @@ class PalionTheme extends InheritedWidget {
     required final this.primaryColor,
     required final this.active,
     required final this.tapOverlay,
+    required final this.cardBackground,
+    required final this.cardContent,
     final Key? key,
     required final Widget child,
   }) : super(child: child, key: key);
@@ -45,6 +49,8 @@ class PalionTheme extends InheritedWidget {
     final Color? primaryColor,
     final Color? active,
     final Color? tapOverlay,
+    final Color? cardBackground,
+    final Color? cardContent,
     final Key? key,
   }) =>
       PalionTheme(
@@ -60,6 +66,8 @@ class PalionTheme extends InheritedWidget {
         primaryColor: primaryColor ?? this.primaryColor,
         active: active ?? this.active,
         tapOverlay: tapOverlay ?? this.tapOverlay,
+        cardBackground: cardBackground ?? this.cardBackground,
+        cardContent: cardContent ?? this.cardContent,
         child: child,
       );
 
@@ -76,6 +84,8 @@ class PalionTheme extends InheritedWidget {
         primaryColor: Colors.blue,
         active: CupertinoColors.activeBlue,
         tapOverlay: Colors.white24,
+        cardBackground: CupertinoColors.secondarySystemBackground,
+        cardContent: CupertinoColors.label,
         child: child,
       );
 
