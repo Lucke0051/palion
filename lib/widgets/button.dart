@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:palion/utilities/colors.dart';
 
 class PalionButton extends StatelessWidget {
@@ -28,6 +29,25 @@ class PalionButton extends StatelessWidget {
     this.color,
     required this.onPressed,
   }) : super(key: key);
+
+  factory PalionButton.text({
+    Key? key,
+    required String label,
+    AlignmentGeometry alignment = Alignment.center,
+    required void Function() onPressed,
+    Color? color,
+  }) =>
+      PalionButton._(
+        key: key,
+        alignment: alignment,
+        onPressed: onPressed,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        label: label,
+        spaceBetween: 0,
+        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: color ?? CupertinoColors.activeBlue),
+        minSize: 30,
+        color: Colors.transparent,
+      );
 
   factory PalionButton.small({
     Key? key,
@@ -107,23 +127,25 @@ class PalionButton extends StatelessWidget {
       alignment: alignment,
       onPressed: onPressed,
       borderRadius: borderRadius,
-      child: Row(
-        children: [
-          if (leading != null)
-            IconTheme(
-              data: iconTheme,
-              child: leading!,
-            ),
-          if (leading != null)
-            SizedBox(
-              width: spaceBetween,
-            ),
-          Text(
-            label,
-            style: textStyle,
-          ),
-        ],
-      ),
+      child: leading != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconTheme(
+                  data: iconTheme,
+                  child: leading!,
+                ),
+                SizedBox(
+                  width: spaceBetween,
+                ),
+                Text(
+                  label,
+                  style: textStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
+          : Text(label, style: textStyle, textAlign: TextAlign.center),
     );
   }
 }
