@@ -123,32 +123,35 @@ class PalionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      color: color ?? PalionTheme.of(context).active,
-      minSize: minSize,
-      padding: padding,
-      alignment: alignment,
-      onPressed: onPressed,
-      borderRadius: borderRadius,
-      child: leading != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconTheme(
-                  data: iconTheme,
-                  child: leading!,
-                ),
-                SizedBox(
-                  width: spaceBetween,
-                ),
-                Text(
-                  label,
-                  style: textStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
-          : Text(label, style: textStyle, textAlign: TextAlign.center),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: CupertinoButton(
+        color: color ?? PalionTheme.of(context).active,
+        minSize: minSize,
+        padding: padding,
+        alignment: alignment,
+        onPressed: onPressed,
+        borderRadius: borderRadius,
+        child: leading != null
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconTheme(
+                    data: iconTheme,
+                    child: leading!,
+                  ),
+                  SizedBox(
+                    width: spaceBetween,
+                  ),
+                  Text(
+                    label,
+                    style: textStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            : Text(label, style: textStyle, textAlign: TextAlign.center),
+      ),
     );
   }
 }
