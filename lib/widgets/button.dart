@@ -56,6 +56,7 @@ class PalionButton extends StatelessWidget {
     AlignmentGeometry alignment = Alignment.center,
     required void Function() onPressed,
     Color? color,
+    Color? textColor,
   }) =>
       PalionButton._(
         key: key,
@@ -66,7 +67,7 @@ class PalionButton extends StatelessWidget {
         leading: leading,
         label: label,
         spaceBetween: 5,
-        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: CupertinoColors.white),
+        textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textColor ?? CupertinoColors.white),
         iconTheme: const IconThemeData(color: CupertinoColors.white, size: 22),
         minSize: 30,
         color: color,
@@ -79,6 +80,7 @@ class PalionButton extends StatelessWidget {
     AlignmentGeometry alignment = Alignment.center,
     required void Function() onPressed,
     Color? color,
+    Color? textColor,
   }) =>
       PalionButton._(
         key: key,
@@ -89,7 +91,7 @@ class PalionButton extends StatelessWidget {
         leading: leading,
         label: label,
         spaceBetween: 5,
-        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: CupertinoColors.white),
+        textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textColor ?? CupertinoColors.white),
         iconTheme: const IconThemeData(color: CupertinoColors.white, size: 22),
         minSize: 35,
         color: color,
@@ -102,6 +104,7 @@ class PalionButton extends StatelessWidget {
     AlignmentGeometry alignment = Alignment.center,
     required void Function() onPressed,
     Color? color,
+    Color? textColor,
   }) =>
       PalionButton._(
         key: key,
@@ -112,7 +115,7 @@ class PalionButton extends StatelessWidget {
         leading: leading,
         label: label,
         spaceBetween: 5,
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: CupertinoColors.white),
+        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textColor ?? CupertinoColors.white),
         iconTheme: const IconThemeData(color: CupertinoColors.white, size: 24),
         minSize: 45,
         color: color,
