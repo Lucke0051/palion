@@ -32,6 +32,7 @@ class PalionDialog extends StatelessWidget {
         slivers: [
           CupertinoSliverNavigationBar(
             largeTitle: Text(title),
+            trailing: trailing != null ? trailing! : null,
             padding: autoCloseButton != null ? const EdgeInsetsDirectional.only(end: 16) : null,
             leading: Row(
               mainAxisSize: MainAxisSize.min,
