@@ -58,7 +58,13 @@ class PalionDialog extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: actions!,
+                  children: [
+                    for (Widget action in actions!)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: action,
+                      ),
+                  ],
                 ),
               ),
             )
