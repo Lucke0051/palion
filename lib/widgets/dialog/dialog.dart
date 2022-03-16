@@ -15,6 +15,7 @@ class PalionDialog extends StatelessWidget {
     this.leading,
     this.trailing,
     this.autoCloseButton,
+    this.backButtonOnFull = false,
     this.insetPadding = const EdgeInsets.only(top: 5),
     Key? key,
   }) : super(key: key);
@@ -25,6 +26,7 @@ class PalionDialog extends StatelessWidget {
   final Widget? trailing;
   final String? autoCloseButton;
   final EdgeInsets insetPadding;
+  final bool backButtonOnFull;
 
   Widget buildFullscreen(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class PalionDialog extends StatelessWidget {
           CupertinoSliverNavigationBar(
             largeTitle: Text(title),
             trailing: trailing != null ? trailing! : null,
-            padding: autoCloseButton != null ? const EdgeInsetsDirectional.only(end: 16) : null,
+            padding: autoCloseButton != null || backButtonOnFull ? const EdgeInsetsDirectional.only(end: 16) : null,
             leading: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
