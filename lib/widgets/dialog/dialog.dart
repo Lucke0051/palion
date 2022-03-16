@@ -103,8 +103,8 @@ class PalionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PalionDialogTypeProvider typeProvider = PalionDialogTypeProvider.of(context);
-    switch (typeProvider.dialogType) {
+    final PalionDialogTypeProvider? typeProvider = PalionDialogTypeProvider.maybeOf(context);
+    switch (typeProvider != null ? typeProvider.dialogType : PalionDialogType.popup) {
       case PalionDialogType.popup:
         return buildPopup(context);
       case PalionDialogType.fullscreen:
@@ -123,7 +123,11 @@ class PalionDialog extends StatelessWidget {
         );
       case PalionDialogType.fullscreen:
         return Navigator.push<T>(
-            context, MaterialPageRoute(builder: (BuildContext context) => PalionDialogTypeProvider(dialogType: dialogType!, child: dialog)));
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => PalionDialogTypeProvider(dialogType: dialogType!, child: dialog),
+          ),
+        );
     }
   }
 }
@@ -139,5 +143,10 @@ class PalionDialogTypeProvider extends InheritedWidget {
     final PalionDialogTypeProvider? inherited = context.dependOnInheritedWidgetOfExactType<PalionDialogTypeProvider>();
     if (inherited != null) return inherited;
     throw Exception("No PalionDialogTypeProvider was found in tree.");
+  }
+
+  static PalionDialogTypeProvider? maybeOf(BuildContext context) {
+    final PalionDialogTypeProvider? inherited = context.dependOnInheritedWidgetOfExactType<PalionDialogTypeProvider>();
+    return inherited;
   }
 }
