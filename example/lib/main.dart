@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:palion/palion.dart';
+import 'package:palion/widgets/dialog/dialog.dart';
+import 'package:palion/widgets/icon_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,14 +14,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Example",
-      theme: ThemeData(
-        primarySwatch: Colors.green,
+    return PalionTheme.light(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Example",
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: const MyHomePage(),
       ),
-      home: PalionTheme.light(child: const MyHomePage()).copyWith(primaryColor: Colors.green, active: Colors.green, selectedTile: Colors.green),
-    );
+    ).copyWith(primaryColor: Colors.green, active: Colors.green, selectedTile: Colors.green);
   }
 }
 
@@ -107,8 +111,25 @@ class MyHomePage extends StatelessWidget {
                           const SizedBox(height: 10),
                           PalionButton.large(
                             leading: const Icon(CupertinoIcons.play_arrow_solid),
-                            label: "Play",
-                            onPressed: () {},
+                            label: "popup",
+                            onPressed: () => PalionDialog.auto(
+                              context,
+                              title: "This is a test",
+                              content: Column(children: List.generate(100, (index) => Text("Hmmmm"))),
+                              /*actions: [
+                                PalionButton.large(label: "label", onPressed: () => Navigator.pop(context)),
+                              ],*/
+                              autoCloseButton: "Close",
+                              actions: [
+                                PalionButton.text(
+                                  label: "Test123",
+                                  onPressed: () {},
+                                  color: PalionTheme.of(context).primaryColor,
+                                ),
+                                PalionButton.large(label: "Test123", onPressed: () {}),
+                              ],
+                              trailing: PalionIconButton(icon: Icon(CupertinoIcons.gear)),
+                            ).show(context),
                           ),
                         ],
                       ),

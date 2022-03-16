@@ -24,13 +24,13 @@ class PalionIconButtonState extends State<PalionIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        onTapDown: (_) => setState(() => _tapped = true),
-        onTapUp: (_) => setState(() => _tapped = false),
-        onTapCancel: () => setState(() => _tapped = false),
+    return GestureDetector(
+      onTap: widget.onTap,
+      onTapDown: (_) => setState(() => _tapped = true),
+      onTapUp: (_) => setState(() => _tapped = false),
+      onTapCancel: () => setState(() => _tapped = false),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
         child: IconTheme(
           data: IconThemeData(
             color: _tapped
