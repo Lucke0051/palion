@@ -39,7 +39,7 @@ class PalionDialog extends StatelessWidget {
             leading: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (autoCloseButton != null)
+                if (autoCloseButton != null || backButtonOnFull)
                   PalionIconButton(
                     icon: const Icon(CupertinoIcons.chevron_back),
                     onTap: () => Navigator.pop(context),
