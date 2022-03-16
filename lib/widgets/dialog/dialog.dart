@@ -15,7 +15,6 @@ class PalionDialog extends StatelessWidget {
     this.leading,
     this.trailing,
     this.autoCloseButton,
-    this.barrierDismissable = true,
     Key? key,
   }) : super(key: key);
   final List<Widget>? actions;
@@ -24,7 +23,6 @@ class PalionDialog extends StatelessWidget {
   final List<Widget>? leading;
   final Widget? trailing;
   final String? autoCloseButton;
-  final bool barrierDismissable;
 
   Widget buildFullscreen(BuildContext context) {
     return Scaffold(
@@ -105,14 +103,14 @@ class PalionDialog extends StatelessWidget {
     }
   }
 
-  static Future<T?> show<T>(BuildContext context, {required Widget dialog, PalionDialogType? dialogType, bool barrierDismissable = true}) {
+  static Future<T?> show<T>(BuildContext context, {required Widget dialog, PalionDialogType? dialogType, bool barrierDismissible = true}) {
     dialogType ??= MediaQuery.of(context).size.width > 500 ? PalionDialogType.popup : PalionDialogType.fullscreen;
     switch (dialogType) {
       case PalionDialogType.popup:
         return showDialog<T>(
           context: context,
           builder: (BuildContext context) => PalionDialogTypeProvider(dialogType: dialogType!, child: dialog),
-          barrierDismissible: barrierDismissable,
+          barrierDismissible: barrierDismissible,
         );
       case PalionDialogType.fullscreen:
         return Navigator.push<T>(
