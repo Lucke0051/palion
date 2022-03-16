@@ -71,6 +71,7 @@ class PalionDialog extends StatelessWidget {
     return AlertDialog(
       scrollable: true,
       insetPadding: insetPadding,
+      contentPadding: EdgeInsets.zero,
       actions: autoCloseButton != null
           ? [
               if (actions != null) ...actions!,
