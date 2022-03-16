@@ -15,6 +15,7 @@ class PalionDialog extends StatelessWidget {
     this.leading,
     this.trailing,
     this.autoCloseButton,
+    this.insetPadding = const EdgeInsets.only(top: 5),
     Key? key,
   }) : super(key: key);
   final List<Widget>? actions;
@@ -23,6 +24,7 @@ class PalionDialog extends StatelessWidget {
   final List<Widget>? leading;
   final Widget? trailing;
   final String? autoCloseButton;
+  final EdgeInsets insetPadding;
 
   Widget buildFullscreen(BuildContext context) {
     return Scaffold(
@@ -68,6 +70,7 @@ class PalionDialog extends StatelessWidget {
   Widget buildPopup(BuildContext context) {
     return AlertDialog(
       scrollable: true,
+      insetPadding: insetPadding,
       actions: autoCloseButton != null
           ? [
               if (actions != null) ...actions!,
@@ -88,7 +91,6 @@ class PalionDialog extends StatelessWidget {
         ],
       ),
       content: content,
-      insetPadding: const EdgeInsets.only(top: 5),
     );
   }
 
