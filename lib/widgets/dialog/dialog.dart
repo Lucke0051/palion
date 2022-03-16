@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:palion/palion.dart';
-import 'package:palion/widgets/icon_button.dart';
 
 enum PalionDialogType {
   popup,
   fullscreen,
 }
 
-class PalionDialog<T> extends StatelessWidget {
+class PalionDialog extends StatelessWidget {
   const PalionDialog({
-    required this.dialogType,
     this.actions,
     this.content,
     required this.title,
@@ -20,7 +18,6 @@ class PalionDialog<T> extends StatelessWidget {
     this.barrierDismissable = true,
     Key? key,
   }) : super(key: key);
-  final PalionDialogType dialogType;
   final List<Widget>? actions;
   final String title;
   final Widget? content;
@@ -99,7 +96,8 @@ class PalionDialog<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (dialogType) {
+    final PalionDialogTypeProvider typeProvider = PalionDialogTypeProvider.of(context);
+    switch (typeProvider.dialogType) {
       case PalionDialogType.popup:
         return buildPopup(context);
       case PalionDialogType.fullscreen:
@@ -107,48 +105,32 @@ class PalionDialog<T> extends StatelessWidget {
     }
   }
 
-  factory PalionDialog.auto(
-    BuildContext context, {
-    List<Widget>? actions,
-    Widget? content,
-    required String title,
-    List<Widget>? leading,
-    Widget? trailing,
-    String? autoCloseButton,
-    bool barrierDismissable = true,
-  }) {
-    final Size screenSize = MediaQuery.of(context).size;
-    if (screenSize.width > 500) {
-      return PalionDialog(
-        dialogType: PalionDialogType.popup,
-        actions: actions,
-        content: content,
-        title: title,
-        leading: leading,
-        trailing: trailing,
-        autoCloseButton: autoCloseButton,
-        barrierDismissable: barrierDismissable,
-      );
-    } else {
-      return PalionDialog(
-        dialogType: PalionDialogType.fullscreen,
-        actions: actions,
-        content: content,
-        title: title,
-        leading: leading,
-        trailing: trailing,
-        autoCloseButton: autoCloseButton,
-        barrierDismissable: barrierDismissable,
-      );
-    }
-  }
-
-  Future<T?> show(BuildContext context) async {
+  static Future<T?> show<T>(BuildContext context, {required Widget dialog, PalionDialogType? dialogType, bool barrierDismissable = true}) {
+    dialogType ??= MediaQuery.of(context).size.width > 500 ? PalionDialogType.popup : PalionDialogType.fullscreen;
     switch (dialogType) {
       case PalionDialogType.popup:
-        return showDialog<T>(context: context, builder: (BuildContext context) => build(context), barrierDismissible: barrierDismissable);
+        return showDialog<T>(
+          context: context,
+          builder: (BuildContext context) => PalionDialogTypeProvider(dialogType: dialogType!, child: dialog),
+          barrierDismissible: barrierDismissable,
+        );
       case PalionDialogType.fullscreen:
-        return Navigator.push<T>(context, MaterialPageRoute(builder: (BuildContext context) => build(context)));
+        return Navigator.push<T>(
+            context, MaterialPageRoute(builder: (BuildContext context) => PalionDialogTypeProvider(dialogType: dialogType!, child: dialog)));
     }
+  }
+}
+
+class PalionDialogTypeProvider extends InheritedWidget {
+  const PalionDialogTypeProvider({Key? key, required this.dialogType, required Widget child}) : super(key: key, child: child);
+  final PalionDialogType dialogType;
+
+  @override
+  bool updateShouldNotify(PalionTheme oldWidget) => false;
+
+  static PalionDialogTypeProvider of(BuildContext context) {
+    final PalionDialogTypeProvider? inherited = context.dependOnInheritedWidgetOfExactType<PalionDialogTypeProvider>();
+    if (inherited != null) return inherited;
+    throw Exception("No PalionDialogTypeProvider was found in tree.");
   }
 }

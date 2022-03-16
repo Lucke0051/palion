@@ -112,24 +112,26 @@ class MyHomePage extends StatelessWidget {
                           PalionButton.large(
                             leading: const Icon(CupertinoIcons.play_arrow_solid),
                             label: "popup",
-                            onPressed: () => PalionDialog.auto(
+                            onPressed: () => PalionDialog.show(
                               context,
-                              title: "This is a test",
-                              content: Column(children: List.generate(100, (index) => Text("Hmmmm"))),
-                              /*actions: [
+                              dialog: PalionDialog(
+                                title: "This is a test",
+                                content: Column(children: List.generate(100, (index) => Text("Hmmmm"))),
+                                /*actions: [
                                 PalionButton.large(label: "label", onPressed: () => Navigator.pop(context)),
                               ],*/
-                              autoCloseButton: "Close",
-                              actions: [
-                                PalionButton.text(
-                                  label: "Test123",
-                                  onPressed: () {},
-                                  color: PalionTheme.of(context).primaryColor,
-                                ),
-                                PalionButton.large(label: "Test123", onPressed: () {}),
-                              ],
-                              trailing: PalionIconButton(icon: Icon(CupertinoIcons.gear)),
-                            ).show(context),
+                                autoCloseButton: "Close",
+                                actions: [
+                                  PalionButton.text(
+                                    label: "Test123",
+                                    onPressed: () {},
+                                    color: PalionTheme.of(context).primaryColor,
+                                  ),
+                                  PalionButton.large(label: "Test123", onPressed: () {}),
+                                ],
+                                trailing: const PalionIconButton(icon: Icon(CupertinoIcons.gear)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
