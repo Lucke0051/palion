@@ -127,7 +127,7 @@ class PalionDialogTypeProvider extends InheritedWidget {
   final PalionDialogType dialogType;
 
   @override
-  bool updateShouldNotify(PalionTheme oldWidget) => false;
+  bool updateShouldNotify(PalionDialogTypeProvider oldWidget) => false;
 
   static PalionDialogTypeProvider of(BuildContext context) {
     final PalionDialogTypeProvider? inherited = context.dependOnInheritedWidgetOfExactType<PalionDialogTypeProvider>();
