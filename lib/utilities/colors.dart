@@ -83,7 +83,7 @@ class PalionTheme extends InheritedWidget {
         itemCategoryItemBorder: CupertinoColors.systemGrey4,
         primaryColor: Colors.blue,
         active: CupertinoColors.activeBlue,
-        tapOverlay: Colors.white24,
+        tapOverlay: Colors.white,
         cardBackground: CupertinoColors.secondarySystemBackground,
         cardContent: CupertinoColors.label,
         child: child,
