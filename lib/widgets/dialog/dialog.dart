@@ -55,6 +55,7 @@ class PalionDialog extends StatelessWidget {
             ),
         ],
       ),
+      resizeToAvoidBottomInset: true,
       bottomNavigationBar: actions != null
           ? SafeArea(
               child: Padding(
